@@ -1,0 +1,15 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: turebine
+security:
+  basic:
+    enabled: false
+turbine:
+  aggregator:
+    cluster-config: default
+  app-config: product-view-service-feign  ### 配置Eureka中的serviceId列表，表明监控哪些服务
+  cluster-name-expression: new String("default")
