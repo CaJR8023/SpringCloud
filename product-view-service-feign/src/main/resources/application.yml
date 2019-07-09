@@ -12,7 +12,9 @@ spring:
       content-type: text/html
     mode: HTML5
 
-feign.hystrix.enabled: true
+  feign:
+  hystrix:
+      enabled: true
 
 management:
   endpoints:

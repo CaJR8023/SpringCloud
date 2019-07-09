@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
-        <module name="eureka-Server" />
+        <module name="eureka-server" />
         <module name="product-data-service" />
         <module name="product-Service-Hystrix-Dashboard" />
         <module name="product-view-service-feign" />
@@ -22,7 +22,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Zuul" options="-parameters" />
       <module name="config-server" options="-parameters" />
-      <module name="eureka-Server" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
       <module name="product-Service-Hystrix-Dashboard" options="-parameters" />
       <module name="product-data-service" options="-parameters" />
       <module name="product-view-service-feign" options="-parameters" />

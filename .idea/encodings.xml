@@ -4,7 +4,7 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Zuul" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/config-server" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eureka-Server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eureka-server" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/product-Service-Hystrix-Dashboard" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/product-data-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/product-view-service-feign" charset="UTF-8" />
