@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>product-view-service-ribbon</artifactId>
+    <artifactId>springcloud-product-view-service-Ribbon</artifactId>
 
-    <name>product-view-service-ribbon</name>
+    <name>springcloud-product-view-service-Ribbon</name>
 
 
     <properties>
