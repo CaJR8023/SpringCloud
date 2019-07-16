@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>product-view-service-feign</artifactId>
+    <artifactId>springcloud-product-view-service-feign</artifactId>
 
-    <name>product-view-service-feign</name>
+    <name>springcloud-product-view-service-feign</name>
 
     <dependencies>
         <dependency>

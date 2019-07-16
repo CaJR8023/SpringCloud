@@ -5,11 +5,13 @@ import com.cajr.springcloud.pojo.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class ProductService {
-    @Autowired
+
+    @Resource
     ProductClientFeign productClientFeign;
 
     public List<Product> listProducts(){

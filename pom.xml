@@ -10,8 +10,8 @@
     <modules>
         <module>eureka-Server</module>
         <module>product-data-service</module>
-        <module>product-view-service-ribbon</module>
-        <module>product-view-service-feign</module>
+        <module>springcloud-product-view-service-Ribbon</module>
+        <module>springcloud-product-view-service-feign</module>
         <module>config-server</module>
         <module>product-Service-Hystrix-Dashboard</module>
         <module>turbine</module>
