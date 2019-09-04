@@ -49,5 +49,5 @@ public class CommonConfig {
     public MySQLBooleanPrefJDBCDataModel mySQLBooleanPrefJDBCDataModel(){
         return new MySQLBooleanPrefJDBCDataModel(dataSource(), PREF_TABLE, PREF_TABLE_USERID,
                 PREF_TABLE_NEWSID,PREF_TABLE_TIME);
-    }8
+    }
 }
