@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cajr.springcloud.mapper.UsersMapper">
+  <resultMap id="BaseResultMap" type="com.cajr.springcloud.vo.Users">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="pref_list" jdbcType="LONGVARCHAR" property="prefList" />
+    <result column="latest_log_time" jdbcType="TIMESTAMP" property="latestLogTime" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, pref_list, latest_log_time, `name`
+  </sql>
+  <select id="findSectionUsers" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+   from users where id  in
+   <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+     #{item,jdbcType=BIGINT}
+   </foreach>
+  </select>
+  <select id="findAllId" resultType="long">
+    select
+    id
+    from users
+  </select>
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from users
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from users
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cajr.springcloud.vo.Users">
+    <!--@mbg.generated-->
+    insert into users (id, pref_list, latest_log_time, 
+      `name`)
+    values (#{id,jdbcType=BIGINT}, #{prefList,jdbcType=LONGVARCHAR}, #{latestLogTime,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cajr.springcloud.vo.Users">
+    <!--@mbg.generated-->
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="prefList != null">
+        pref_list,
+      </if>
+      <if test="latestLogTime != null">
+        latest_log_time,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="prefList != null">
+        #{prefList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="latestLogTime != null">
+        #{latestLogTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cajr.springcloud.vo.Users">
+    <!--@mbg.generated-->
+    update users
+    <set>
+      <if test="prefList != null">
+        pref_list = #{prefList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="latestLogTime != null">
+        latest_log_time = #{latestLogTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cajr.springcloud.vo.Users">
+    <!--@mbg.generated-->
+    update users
+    set pref_list = #{prefList,jdbcType=LONGVARCHAR},
+      latest_log_time = #{latestLogTime,jdbcType=TIMESTAMP},
+      `name` = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

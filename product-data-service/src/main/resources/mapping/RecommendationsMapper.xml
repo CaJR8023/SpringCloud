@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cajr.springcloud.mapper.RecommendationsMapper">
+  <resultMap id="BaseResultMap" type="com.cajr.springcloud.vo.Recommendations">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="news_id" jdbcType="BIGINT" property="newsId" />
+    <result column="derive_time" jdbcType="TIMESTAMP" property="deriveTime" />
+    <result column="feedback" jdbcType="BIT" property="feedback" />
+    <result column="derive_algorithm" jdbcType="INTEGER" property="deriveAlgorithm" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, news_id, derive_time, feedback, derive_algorithm
+  </sql>
+  <select id="findAllByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+   from recommendations where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from recommendations
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from recommendations
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cajr.springcloud.vo.Recommendations" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into recommendations (user_id, news_id, derive_time, 
+      feedback, derive_algorithm)
+    values (#{userId,jdbcType=BIGINT}, #{newsId,jdbcType=BIGINT}, #{deriveTime,jdbcType=TIMESTAMP}, 
+      #{feedback,jdbcType=BIT}, #{deriveAlgorithm,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cajr.springcloud.vo.Recommendations" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into recommendations
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="newsId != null">
+        news_id,
+      </if>
+      <if test="deriveTime != null">
+        derive_time,
+      </if>
+      <if test="feedback != null">
+        feedback,
+      </if>
+      <if test="deriveAlgorithm != null">
+        derive_algorithm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="newsId != null">
+        #{newsId,jdbcType=BIGINT},
+      </if>
+      <if test="deriveTime != null">
+        #{deriveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feedback != null">
+        #{feedback,jdbcType=BIT},
+      </if>
+      <if test="deriveAlgorithm != null">
+        #{deriveAlgorithm,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cajr.springcloud.vo.Recommendations">
+    <!--@mbg.generated-->
+    update recommendations
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="newsId != null">
+        news_id = #{newsId,jdbcType=BIGINT},
+      </if>
+      <if test="deriveTime != null">
+        derive_time = #{deriveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feedback != null">
+        feedback = #{feedback,jdbcType=BIT},
+      </if>
+      <if test="deriveAlgorithm != null">
+        derive_algorithm = #{deriveAlgorithm,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cajr.springcloud.vo.Recommendations">
+    <!--@mbg.generated-->
+    update recommendations
+    set user_id = #{userId,jdbcType=BIGINT},
+      news_id = #{newsId,jdbcType=BIGINT},
+      derive_time = #{deriveTime,jdbcType=TIMESTAMP},
+      feedback = #{feedback,jdbcType=BIT},
+      derive_algorithm = #{deriveAlgorithm,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

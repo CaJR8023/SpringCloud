@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cajr.springcloud.mapper.NewsMapper">
+  <resultMap id="BaseResultMap" type="com.cajr.springcloud.vo.News">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="news_time" jdbcType="TIMESTAMP" property="newsTime" />
+    <result column="title" jdbcType="LONGVARCHAR" property="title" />
+    <result column="module_id" jdbcType="INTEGER" property="moduleId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, content, news_time, title, module_id, url
+  </sql>
+
+  <select id="findSectionNews" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+   from news where id in
+   <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+     #{item,jdbcType=BIGINT}
+   </foreach>
+  </select>
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+   from news
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from news
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from news
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cajr.springcloud.vo.News" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into news (content, news_time, title, 
+      module_id, url)
+    values (#{content,jdbcType=LONGVARCHAR}, #{newsTime,jdbcType=TIMESTAMP}, #{title,jdbcType=LONGVARCHAR}, 
+      #{moduleId,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cajr.springcloud.vo.News" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into news
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="content != null">
+        content,
+      </if>
+      <if test="newsTime != null">
+        news_time,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="moduleId != null">
+        module_id,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="newsTime != null">
+        #{newsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="moduleId != null">
+        #{moduleId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cajr.springcloud.vo.News">
+    <!--@mbg.generated-->
+    update news
+    <set>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="newsTime != null">
+        news_time = #{newsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="moduleId != null">
+        module_id = #{moduleId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cajr.springcloud.vo.News">
+    <!--@mbg.generated-->
+    update news
+    set content = #{content,jdbcType=LONGVARCHAR},
+      news_time = #{newsTime,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=LONGVARCHAR},
+      module_id = #{moduleId,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

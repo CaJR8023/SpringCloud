@@ -6,7 +6,44 @@ spring:
     name: product-data-service
   zipkin:
     base-url: http://localhost:9411
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://127.0.0.1:3306/news-systemdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123zxc
+    hikari:
+        minimum-idle: 5
+        idle-timeout: 600000
+        maximum-pool-size: 10
+        auto-commit: true
+        pool-name: MyhikariCP
+        max-lifetime: 1800000
+        connection-timeout: 30000
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+elasticsearch:
+  ip: 127.0.0.1
+  port: 9300
+  pool: 5
+  cluster:
+    name: elasticsearch
+mybatis:
+  type-aliases-package: com.cajr.springcloud.vo
+  mapper-locations: classpath:mapping/*.xml
+
+#新闻自定义变量
+news:
+  beforeDays: -30
+  activeDays: -30
+
+#算法自定义配置
+algorithm:
+  CFRecNum: 5
+  CFValidDay: -30
+  CBRecNum: 5
+  previousDays: -30
+  TFIDFKeywordsNum: 10

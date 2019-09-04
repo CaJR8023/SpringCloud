@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cajr.springcloud.mapper.NewslogsMapper">
+  <resultMap id="BaseResultMap" type="com.cajr.springcloud.vo.Newslogs">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="news_id" jdbcType="BIGINT" property="newsId" />
+    <result column="view_time" jdbcType="TIMESTAMP" property="viewTime" />
+    <result column="prefer_degree" jdbcType="INTEGER" property="preferDegree" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, news_id, view_time, prefer_degree
+  </sql>
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+   from newslogs
+  </select>
+  <select id="findAllByUserId" parameterType="long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+   from newslogs where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from newslogs
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from newslogs
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cajr.springcloud.vo.Newslogs" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into newslogs (user_id, news_id, view_time, 
+      prefer_degree)
+    values (#{userId,jdbcType=BIGINT}, #{newsId,jdbcType=BIGINT}, #{viewTime,jdbcType=TIMESTAMP}, 
+      #{preferDegree,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cajr.springcloud.vo.Newslogs" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into newslogs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="newsId != null">
+        news_id,
+      </if>
+      <if test="viewTime != null">
+        view_time,
+      </if>
+      <if test="preferDegree != null">
+        prefer_degree,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="newsId != null">
+        #{newsId,jdbcType=BIGINT},
+      </if>
+      <if test="viewTime != null">
+        #{viewTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="preferDegree != null">
+        #{preferDegree,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cajr.springcloud.vo.Newslogs">
+    <!--@mbg.generated-->
+    update newslogs
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="newsId != null">
+        news_id = #{newsId,jdbcType=BIGINT},
+      </if>
+      <if test="viewTime != null">
+        view_time = #{viewTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="preferDegree != null">
+        prefer_degree = #{preferDegree,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cajr.springcloud.vo.Newslogs">
+    <!--@mbg.generated-->
+    update newslogs
+    set user_id = #{userId,jdbcType=BIGINT},
+      news_id = #{newsId,jdbcType=BIGINT},
+      view_time = #{viewTime,jdbcType=TIMESTAMP},
+      prefer_degree = #{preferDegree,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
