@@ -1,10 +1,11 @@
-package com.cajr.springcloud.util;
+package com.cajr.springcloud.service.impl;
 
 import com.cajr.springcloud.mapper.NewsMapper;
 import com.cajr.springcloud.mapper.NewslogsMapper;
 import com.cajr.springcloud.mapper.RecommendationsMapper;
 import com.cajr.springcloud.mapper.UsersMapper;
-import com.cajr.springcloud.recommend.content.CustomizedHashMap;
+import com.cajr.springcloud.common.content.CustomizedHashMap;
+import com.cajr.springcloud.util.JsonUtil;
 import com.cajr.springcloud.vo.News;
 import com.cajr.springcloud.vo.Newslogs;
 import com.cajr.springcloud.vo.Recommendations;
@@ -13,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -24,21 +26,21 @@ import java.util.*;
  * @create 2019/9/4 15:23
  */
 @Component
-public class RecommendUtil {
+public class RecommendService {
 
-    public static final Logger logger= Logger.getLogger(RecommendUtil.class);
-
-    @Autowired
-    private static UsersMapper usersMapper;
+    public static final Logger logger= Logger.getLogger(RecommendService.class);
 
     @Autowired
-    private static NewsMapper newsMapper;
+    private  UsersMapper usersMapper;
 
     @Autowired
-    private static NewslogsMapper newslogsMapper;
+    private  NewsMapper newsMapper;
 
     @Autowired
-    private static RecommendationsMapper recommendationsMapper;
+    private  NewslogsMapper newslogsMapper;
+
+    @Autowired
+    private  RecommendationsMapper recommendationsMapper;
 
 
     /**
@@ -54,18 +56,18 @@ public class RecommendUtil {
      *
      * @return 返回时效时间的"year-month-day"的格式表示，方便数据库的查询
      */
-    public static String getInRecDate(){
+    public  String getInRecDate(){
         return getSpecificDayFormat(beforeDays);
     }
 
-    public static Date getInRecDate1(){
+    public  Date getInRecDate1(){
         return getSpecificDateFormat(beforeDays);
     }
 
     /**
      * @return the inRecDate 返回时效时间的"year-month-day"的格式表示，方便数据库的查询
      */
-    public static String getInRecDate(int beforeDays)
+    public  String getInRecDate(int beforeDays)
     {
         return getSpecificDayFormat(beforeDays);
     }
@@ -86,7 +88,7 @@ public class RecommendUtil {
      * @param
      * @param userId
      */
-    public static void filterOutDateNews(List<Long> longIds,Long userId){
+    public  void filterOutDateNews(List<Long> longIds,Long userId){
         List<News> newsList = newsMapper.findSectionNews(longIds);
         if (!newsList.isEmpty()){
             newsList.forEach((news -> {
@@ -102,7 +104,7 @@ public class RecommendUtil {
      * @param col
      * @param userId
      */
-    public static void filterBrowsedNews(Collection<Long> col, Long userId){
+    public  void filterBrowsedNews(Collection<Long> col, Long userId){
         List<Newslogs> newsLogs = newslogsMapper.findAllByUserId(userId);
         if (!newsLogs.isEmpty()){
             newsLogs.forEach((newslogs) -> {
@@ -116,7 +118,7 @@ public class RecommendUtil {
     /**
      * 过滤方法filterRecCedNews() 过滤掉已经推荐过的新闻（在recommend表中查找）
      */
-    public static void filterRecCedNews(Collection<Long> col, Long userId) {
+    public  void filterRecCedNews(Collection<Long> col, Long userId) {
         List<Recommendations> recommendations = recommendationsMapper.findAllByUserId(userId);
         List<Recommendations> recommendationsList = new ArrayList<>();
         if (!recommendations.isEmpty()){
@@ -138,19 +140,19 @@ public class RecommendUtil {
      * 获取的userId的list
      * @return
      */
-    public static List<Long> getUserList(){
+    public  List<Long> getUserList(){
         return usersMapper.findAllId();
     }
 
-    public static int getBeforeDays() {
+    public  int getBeforeDays() {
         return beforeDays;
     }
 
-    public static void setBeforeDays(int beforeDays) {
-        RecommendUtil.beforeDays = beforeDays;
+    public  void setBeforeDays(int beforeDays) {
+        RecommendService.beforeDays = beforeDays;
     }
 
-    public static String getSpecificDayFormat(int beforeDays)
+    public  String getSpecificDayFormat(int beforeDays)
     {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         // 得到日历
@@ -161,7 +163,7 @@ public class RecommendUtil {
         return "'" + dateFormat.format(d) + "'";
     }
 
-    public static Date getSpecificDateFormat(int beforeDays)
+    public  Date getSpecificDateFormat(int beforeDays)
     {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         // 得到日历
@@ -177,9 +179,10 @@ public class RecommendUtil {
      * @param userSet
      * @return
      */
-    public static HashMap<Long, CustomizedHashMap<Integer, CustomizedHashMap<String, Double>>> getUserPrefListMap(Collection<Long> userSet){
-        HashMap<Long, CustomizedHashMap<Integer, CustomizedHashMap<String, Double>>> userPrefListMap = null;
-        List<Users> usersList = usersMapper.findSectionUsers((List<Long>) userSet);
+    public  HashMap<Long, CustomizedHashMap<Integer, CustomizedHashMap<String, Double>>> getUserPrefListMap(Collection<Long> userSet){
+        HashMap<Long, CustomizedHashMap<Integer, CustomizedHashMap<String, Double>>> userPrefListMap =new HashMap<>(16);
+        List<Long> userIds = new ArrayList<>(userSet);
+        List<Users> usersList = usersMapper.findSectionUsers(userIds);
         if (!usersList.isEmpty()){
             for (Users users : usersList) {
                 userPrefListMap.put(users.getId(), JsonUtil.jsonPrefListtoMap(users.getPrefList()));
@@ -188,12 +191,12 @@ public class RecommendUtil {
         return userPrefListMap;
     }
 
-    public static void insertRecommend(Long userId, Iterator<Long> newsIte, int recAlgo) {
+    public  void insertRecommend(Long userId, Iterator<Long> newsIte, int recAgo) {
         while (newsIte.hasNext())
         {
             Recommendations rec =new Recommendations();
             rec.setUserId(userId);
-            rec.setDeriveAlgorithm(recAlgo);
+            rec.setDeriveAlgorithm(recAgo);
             rec.setNewsId(newsIte.next());
             recommendationsMapper.insertSelective(rec);
         }
@@ -203,7 +206,7 @@ public class RecommendUtil {
      * TODO 获取所有活跃用户ID
      * @return
      */
-    public static List<Long> getActiveUsers(){
+    public  List<Long> getActiveUsers(){
         List<Users> usersList = usersMapper.findAll();
         List<Long> activeUsersIdList = new ArrayList<>();
         if (!usersList.isEmpty()){
@@ -221,7 +224,7 @@ public class RecommendUtil {
      * @param set
      * @param n
      */
-    public static void removeOverNews(List<Long> set,int n){
+    public void removeOverNews(List<Long> set,int n){
         int i = 0;
         Iterator<Long> iterator = set.iterator();
         while (iterator.hasNext()){
@@ -235,7 +238,5 @@ public class RecommendUtil {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(getSpecificDayFormat(-30));
-    }
+
 }

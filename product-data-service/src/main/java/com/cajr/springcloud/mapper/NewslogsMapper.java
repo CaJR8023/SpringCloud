@@ -25,4 +25,6 @@ public interface NewslogsMapper {
     List<Newslogs> findAllByUserId(Long userId);
 
     List<Newslogs> findAll();
+
+    List<Newslogs> findAllDesc();
 }

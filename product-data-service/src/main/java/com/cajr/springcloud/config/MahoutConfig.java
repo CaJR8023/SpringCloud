@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 /**
@@ -15,7 +16,7 @@ import javax.sql.DataSource;
  * @create 2019/9/4 17:32
  */
 @Configuration
-public class CommonConfig {
+public class MahoutConfig {
     //偏好表表名
     public static final String PREF_TABLE="newslogs";
     //用户id列名

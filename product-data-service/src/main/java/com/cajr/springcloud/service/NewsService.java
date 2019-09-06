@@ -12,4 +12,6 @@ public interface NewsService {
     List<News> findAll();
 
     News getOne(long id);
+
+    int add(News news);
 }

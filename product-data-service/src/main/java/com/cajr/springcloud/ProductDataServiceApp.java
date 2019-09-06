@@ -5,12 +5,15 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.NetUtil;
 import cn.hutool.core.util.NumberUtil;
+import com.cajr.springcloud.main.JobSetter;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -24,6 +27,7 @@ import java.util.concurrent.TimeoutException;
 public class ProductDataServiceApp {
 
         public static void main(String[] args) {
+
             int port = 0;
             int defaultPort = 8001;
             Future<Integer> future = ThreadUtil.execAsync(() ->{

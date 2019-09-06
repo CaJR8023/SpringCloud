@@ -13,6 +13,9 @@
     <!--@mbg.generated-->
     id, user_id, news_id, view_time, prefer_degree
   </sql>
+  <select id="findAllDesc" resultMap="BaseResultMap">
+    select count(*) as num,news_id from newslogs group by news_id ORDER BY num DESC
+  </select>
   <select id="findAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>

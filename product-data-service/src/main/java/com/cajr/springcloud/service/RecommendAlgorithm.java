@@ -1,10 +1,7 @@
-package com.cajr.springcloud.algorithms;
+package com.cajr.springcloud.service;
 
-import com.cajr.springcloud.mapper.UsersMapper;
-import com.cajr.springcloud.util.RecommendUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.cajr.springcloud.service.impl.RecommendService;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -26,9 +23,9 @@ public interface RecommendAlgorithm {
     /**
      * 针对所有用户返回推荐结果
      */
-    public default void recommend(){
-        recommend(RecommendUtil.getUserList());
-    }
+//    public default void recommend(){
+//        recommend(RecommendService.getUserList());
+//    }
 
     /**
      * 针对特定用户返回推荐结果

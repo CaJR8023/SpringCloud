@@ -1,9 +1,11 @@
-package com.cajr.springcloud.recommend.collaborative;
+package com.cajr.springcloud.service.impl;
 
-import com.cajr.springcloud.algorithms.RecommendAlgorithm;
+import com.cajr.springcloud.service.RecommendAlgorithm;
 import com.cajr.springcloud.mapper.NewslogsMapper;
-import com.cajr.springcloud.util.RecommendUtil;
+import com.cajr.springcloud.service.NewsLogsService;
+import com.cajr.springcloud.service.RecommendationsService;
 import com.cajr.springcloud.vo.Newslogs;
+import com.cajr.springcloud.vo.Recommendations;
 import org.apache.log4j.Logger;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLBooleanPrefJDBCDataModel;
@@ -16,6 +18,8 @@ import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -25,25 +29,33 @@ import java.util.*;
  * @create 2019/9/4 15:06
  * TODO Collaborative-Based Filter 基于用户的协同过滤
  */
+@Service("MahoutUserBasedCollaborativeRecommender")
 public class MahoutUserBasedCollaborativeRecommender implements RecommendAlgorithm {
 
     public static final Logger logger = Logger.getLogger(MahoutUserBasedCollaborativeRecommender.class);
 
-    @Resource
+    @Autowired
     NewslogsMapper newslogsMapper;
 
-    @Resource
+    @Autowired
     MySQLBooleanPrefJDBCDataModel model;
+
+    @Autowired
+    DataSourceProperties dataSourceProperties;
+
+    @Autowired
+    RecommendService recommendService;
+
     /**
      * 对应计算相似度时的时效天数
      */
     @Value("${algorithm.CFValidDay}")
-    private static int inRecDays;
+    private  int inRecDays;
     /**
      * 给每个用户推荐的新闻的条数
      */
     @Value("${algorithm.CFRecNum}")
-    public static int nNews;
+    public  int nNews;
 
     /**
      * 给特定的一批用户进行新闻推荐
@@ -62,7 +74,7 @@ public class MahoutUserBasedCollaborativeRecommender implements RecommendAlgorit
             //移除过期的用户浏览新闻行为，这些行为对计算用户相似度不再具有较大价值
             if (!newslogs.isEmpty()){
                 for (Newslogs newslogs1: newslogs){
-                    if (newslogs1.getViewTime().before(RecommendUtil.getInRecTimestamp(inRecDays))){
+                    if (newslogs1.getViewTime().before(RecommendService.getInRecTimestamp(inRecDays))){
                         mySQLBooleanPrefJDBCDataModel.removePreference(newslogs1.getUserId(),newslogs1.getNewsId());
                     }
                 }
@@ -85,17 +97,17 @@ public class MahoutUserBasedCollaborativeRecommender implements RecommendAlgorit
                 }
                 if (!hs.isEmpty()){
                     // 过滤掉已推荐新闻和已过期新闻
-                    RecommendUtil.filterOutDateNews(hs,userId);
-                    RecommendUtil.filterRecCedNews(hs,userId);
+                    recommendService.filterOutDateNews(hs,userId);
+                    recommendService.filterRecCedNews(hs,userId);
                 }else {
                     continue;
                 }
 
                 if (hs.size()>nNews){
-                    RecommendUtil.removeOverNews(hs,nNews);
+                    recommendService.removeOverNews(hs,nNews);
                 }
 
-                RecommendUtil.insertRecommend(userId,hs.iterator(),RecommendAlgorithm.CF);
+                recommendService.insertRecommend(userId,hs.iterator(),RecommendAlgorithm.CF);
 
                 count += hs.size();
             }
@@ -110,4 +122,5 @@ public class MahoutUserBasedCollaborativeRecommender implements RecommendAlgorit
         System.out.println("CF has contributed " + (count/users.size()) + " recommending news on average");
         System.out.println("CF finish at "+new Date());
     }
+
 }

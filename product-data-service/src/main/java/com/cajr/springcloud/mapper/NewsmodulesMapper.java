@@ -16,7 +16,11 @@ public interface NewsmodulesMapper {
 
     Newsmodules selectByPrimaryKey(Integer id);
 
+    Newsmodules selectByName(String name);
+
     int updateByPrimaryKeySelective(Newsmodules record);
 
     int updateByPrimaryKey(Newsmodules record);
+
+
 }

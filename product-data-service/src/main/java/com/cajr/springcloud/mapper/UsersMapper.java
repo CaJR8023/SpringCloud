@@ -22,6 +22,8 @@ public interface UsersMapper {
 
     int updateByPrimaryKey(Users record);
 
+    int updatePrefListByPrimaryKey(Long userId,String prefList);
+
     List<Long> findAllId();
 
     List<Users> findAll();

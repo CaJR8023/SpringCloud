@@ -47,3 +47,9 @@ algorithm:
   CBRecNum: 5
   previousDays: -30
   TFIDFKeywordsNum: 10
+  startAt: 30 * * * * ?
+  enableCF: true
+  enableCB: true
+  enableHR: true
+
+

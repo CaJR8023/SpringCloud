@@ -105,4 +105,9 @@
       `name` = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <update id="updatePrefListByPrimaryKey" >
+    update users
+    set pref_list = #{param2,jdbcType=LONGVARCHAR}
+    where id = #{param1,jdbcType=BIGINT}
+  </update>
 </mapper>

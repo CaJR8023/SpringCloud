@@ -23,6 +23,14 @@
      #{item,jdbcType=BIGINT}
    </foreach>
   </select>
+  <select id="findSectionNewsById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+   from news where id in
+   <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+     #{item,jdbcType=BIGINT}
+   </foreach>
+  </select>
   <select id="findAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>

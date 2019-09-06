@@ -1,4 +1,4 @@
-package com.cajr.springcloud.recommend.content;
+package com.cajr.springcloud.common.content;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,7 +19,7 @@ public class CustomizedHashMap<K,V> extends HashMap<K,V>{
             K key=keyIte.next();
             toString+="\""+key+"\":"+this.get(key)+",";
         }
-        if(toString.equals("{")){
+        if("{".equals(toString)){
             toString="{}";
         }
         else{

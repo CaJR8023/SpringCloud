@@ -16,6 +16,7 @@ import java.util.List;
 public class NewsServiceImpl implements NewsService {
     @Resource
     NewsMapper newsMapper;
+
     @Override
     public List<News> findAll() {
         return newsMapper.findAll();
@@ -24,5 +25,10 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public News getOne(long id) {
         return newsMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int add(News news) {
+        return this.newsMapper.insertSelective(news);
     }
 }
