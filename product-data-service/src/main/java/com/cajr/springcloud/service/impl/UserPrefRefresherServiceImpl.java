@@ -20,7 +20,7 @@ import java.util.*;
  * @Author CAJR
  * @create 2019/9/5 13:47
  */
-@Service
+@Service("UserPrefRefresherServiceImpl")
 public class UserPrefRefresherServiceImpl implements UserPrefRefresherService {
 
     //设置TFIDF提取的关键字数目
@@ -67,24 +67,27 @@ public class UserPrefRefresherServiceImpl implements UserPrefRefresherService {
                 for (Long userId : userIdSet){
                     List<Long> newsIdList = userBrowsedMap.get(userId);
                     if (!newsIdList.isEmpty()){
-                        newsIdList.forEach((newsId)->{
+                        for (Long newsId : newsIdList) {
                             Integer moduleId = (Integer) newsTFIDFMap.get(newsId+"moduleId");
                             //获得对应模块的map
                             CustomizedHashMap<String,Double> rateMap = userPrefListMap.get(userId).get(moduleId);
+                            System.out.println(rateMap.toString());
                             //获取新闻的(关键字:TFIDF)的List
                             List<Keyword> keywordList = (List<Keyword>) newsTFIDFMap.get(newsId.toString());
                             if (!keywordList.isEmpty()){
-                                keywordList.forEach(keyword -> {
+                                for (Keyword keyword :
+                                        keywordList) {
                                     String name = keyword.getName();
-                                    if (rateMap.containsKey(name)){
-                                        rateMap.put(name,rateMap.get(name)+keyword.getScore());
-                                    }else {
-                                        rateMap.put(name,keyword.getScore());
+                                    System.out.println(name);
+                                    if (rateMap.containsKey(name)) {
+                                        rateMap.put(name, rateMap.get(name) + keyword.getScore());
+                                    } else {
+                                        rateMap.put(name, keyword.getScore());
                                     }
-                                });
+                                }
                                 userPrefListMap.get(userId);
                             }
-                        });
+                        }
                     }
                 }
 
@@ -141,7 +144,7 @@ public class UserPrefRefresherServiceImpl implements UserPrefRefresherService {
         Map<Long, List<Long>> userBrowsedMap = new HashMap<>(16);
         List<Newslogs> newsLogsList = this.newslogsMapper.findAll();
         for (Newslogs n : newsLogsList) {
-            if (n.getViewTime().before(recommendService.getSpecificDateFormat(0))){
+            if (n.getViewTime().after(recommendService.getSpecificDateFormat(-1))){
                 userBrowsedMap.put(n.getUserId(),new ArrayList<>());
                 userBrowsedMap.get(n.getUserId()).add(n.getNewsId());
             }

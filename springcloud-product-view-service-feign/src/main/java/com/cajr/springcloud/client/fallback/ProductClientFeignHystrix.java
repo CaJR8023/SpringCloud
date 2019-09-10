@@ -1,19 +1,34 @@
 package com.cajr.springcloud.client.fallback;
 
-import com.cajr.springcloud.client.ProductClientFeign;
-import com.cajr.springcloud.pojo.Product;
+import com.cajr.springcloud.client.ClientFeign;
+import com.cajr.springcloud.vo.News;
+import com.cajr.springcloud.vo.Newslogs;
+import com.cajr.springcloud.vo.Recommendations;
+import com.cajr.springcloud.vo.result.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ProductClientFeignHystrix implements ProductClientFeign {
+public class ProductClientFeignHystrix implements ClientFeign {
 
     @Override
-    public List<Product> listProducts() {
-        List<Product> result = new ArrayList<>();
-        result.add(new Product(0,"产品数据微服务不可用",0));
+    public List<News> listNews() {
+        List<News> result = new ArrayList<>();
+        News news = new News();
+        news.setId(0L);
+        result.add(news);
         return result;
+    }
+
+    @Override
+    public List<Recommendations> listRecommendations(Long userId) {
+        return null;
+    }
+
+    @Override
+    public Result addUserNewsLogs(Newslogs newslogs) {
+        return null;
     }
 }

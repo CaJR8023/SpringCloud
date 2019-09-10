@@ -27,4 +27,9 @@ public class NewsLogsServiceImpl implements NewsLogsService {
     public List<Newslogs> findAll() {
         return newslogsMapper.findAll();
     }
+
+    @Override
+    public Integer add(Newslogs newslogs) {
+        return this.newslogsMapper.insertSelective(newslogs);
+    }
 }

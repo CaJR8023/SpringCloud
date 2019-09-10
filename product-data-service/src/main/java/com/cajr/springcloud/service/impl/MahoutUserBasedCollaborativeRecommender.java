@@ -73,9 +73,9 @@ public class MahoutUserBasedCollaborativeRecommender implements RecommendAlgorit
 
             //移除过期的用户浏览新闻行为，这些行为对计算用户相似度不再具有较大价值
             if (!newslogs.isEmpty()){
-                for (Newslogs newslogs1: newslogs){
-                    if (newslogs1.getViewTime().before(RecommendService.getInRecTimestamp(inRecDays))){
-                        mySQLBooleanPrefJDBCDataModel.removePreference(newslogs1.getUserId(),newslogs1.getNewsId());
+                for (Newslogs newsLogs1: newslogs){
+                    if (newsLogs1.getViewTime().before(RecommendService.getInRecTimestamp(inRecDays))){
+                        mySQLBooleanPrefJDBCDataModel.removePreference(newsLogs1.getUserId(),newsLogs1.getNewsId());
                     }
                 }
             }

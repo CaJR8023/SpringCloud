@@ -4,9 +4,11 @@ import com.cajr.springcloud.main.JobSetter;
 import com.cajr.springcloud.service.NewsLogsService;
 import com.cajr.springcloud.service.NewsService;
 import com.cajr.springcloud.service.RecommendAlgorithm;
+import com.cajr.springcloud.util.NewsImportUtil;
 import com.cajr.springcloud.util.NewsScraperUtil;
 import com.cajr.springcloud.vo.News;
 import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLBooleanPrefJDBCDataModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,9 @@ public class NewsController {
     @Qualifier("ContentBasedRecommender")
     RecommendAlgorithm recommendAlgorithm;
 
+    @Autowired
+    NewsImportUtil newsImportUtil;
+
 //    @Resource
 //    @Qualifier("ContentBasedRecommender")
 //    RecommendAlgorithm recommendAlgorithm;
@@ -44,13 +49,13 @@ public class NewsController {
     @GetMapping("/")
     public List<News> findAll(){
         List<News> news = newsService.findAll();
-
         return newsService.findAll();
-
     }
+
     @GetMapping("/import")
-    public Object findOne() throws IOException, SQLException {
-        return newsLogsService.findAll();
+    public Object findOne() throws IOException, SQLException, InterruptedException {
+        newsImportUtil.getNewsList();
+         return "success";
     }
 
     @GetMapping("/recommend")
@@ -60,12 +65,14 @@ public class NewsController {
         userList.add(1L);
         userList.add(2L);
         userList.add(3L);
-//       jobSetter.executeInstantJobForCertainUsers(userList);
+       jobSetter.executeInstantJobForCertainUsers(userList);
 //        this.recommendAlgorithm.recommend(userList);
-        jobSetter.executeQuartzJobForCertainUsers(userList);
+//        jobSetter.executeQuartzJobForCertainUsers(userList);
 
          Long end = System.currentTimeMillis();
          System.out.println(end-start);
     }
+
+
 
 }

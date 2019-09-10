@@ -10,7 +10,7 @@ spring:
     encoding: UTF-8
     servlet:
       content-type: text/html
-    mode: HTML5
+    mode: LEGACYHTML5
 
   feign:
   hystrix:

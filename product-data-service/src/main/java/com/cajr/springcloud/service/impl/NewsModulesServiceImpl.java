@@ -6,6 +6,7 @@ import com.cajr.springcloud.vo.Newsmodules;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author CAJR
@@ -15,6 +16,11 @@ import javax.annotation.Resource;
 public class NewsModulesServiceImpl implements NewsModulesService {
     @Resource
     NewsmodulesMapper newsmodulesMapper;
+
+    @Override
+    public List<Newsmodules> list() {
+        return this.newsmodulesMapper.findAll();
+    }
 
     @Override
     public Newsmodules selectByName(String name) {

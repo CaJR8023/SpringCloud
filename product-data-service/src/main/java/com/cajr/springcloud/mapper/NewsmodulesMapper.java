@@ -2,6 +2,8 @@ package com.cajr.springcloud.mapper;
 
 import com.cajr.springcloud.vo.Newsmodules;
 
+import java.util.List;
+
 /**
  * @Author CAJR
  * @create 2019/9/4 13:01
@@ -22,5 +24,6 @@ public interface NewsmodulesMapper {
 
     int updateByPrimaryKey(Newsmodules record);
 
+    List<Newsmodules> findAll();
 
 }

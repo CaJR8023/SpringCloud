@@ -47,10 +47,10 @@ public class RecommendService {
      * 推荐新闻的时效性天数，即从推荐当天开始到之前beforeDays天的新闻属于仍具有时效性的新闻，予以推荐。
      */
     @Value("${news.beforeDays}")
-    private static int beforeDays;
+    private int beforeDays;
 
     @Value("${news.activeDays}")
-    private static int activeDays;
+    private int activeDays;
 
     /**
      *
@@ -144,13 +144,6 @@ public class RecommendService {
         return usersMapper.findAllId();
     }
 
-    public  int getBeforeDays() {
-        return beforeDays;
-    }
-
-    public  void setBeforeDays(int beforeDays) {
-        RecommendService.beforeDays = beforeDays;
-    }
 
     public  String getSpecificDayFormat(int beforeDays)
     {
@@ -174,6 +167,11 @@ public class RecommendService {
         return d;
     }
 
+//    public static void main(String[] args) {
+//        RecommendService recommendService = new RecommendService();
+//        String date = recommendService.getSpecificDayFormat(-10);
+//        System.out.println(date);
+//    }
     /**
      * TODO 获取所有用户的喜好关键词列表
      * @param userSet

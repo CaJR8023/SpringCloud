@@ -20,6 +20,8 @@ public class Recommendations {
 
     private Integer deriveAlgorithm;
 
+    private News news;
+
     public Long getId() {
         return id;
     }
@@ -66,5 +68,13 @@ public class Recommendations {
 
     public void setDeriveAlgorithm(Integer deriveAlgorithm) {
         this.deriveAlgorithm = deriveAlgorithm;
+    }
+
+    public News getNews() {
+        return news;
+    }
+
+    public void setNews(News news) {
+        this.news = news;
     }
 }

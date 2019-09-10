@@ -49,7 +49,7 @@ public class ProductDataServiceApp {
                 return p;
             });
             try{
-                port=future.get(10, TimeUnit.SECONDS);
+                port=future.get(1, TimeUnit.SECONDS);
             }
             catch (InterruptedException | ExecutionException | TimeoutException e){
                 port = defaultPort;

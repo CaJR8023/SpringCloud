@@ -9,6 +9,7 @@
     <result column="derive_time" jdbcType="TIMESTAMP" property="deriveTime" />
     <result column="feedback" jdbcType="BIT" property="feedback" />
     <result column="derive_algorithm" jdbcType="INTEGER" property="deriveAlgorithm" />
+    <association property="news" javaType="com.cajr.springcloud.vo.News" select="com.cajr.springcloud.mapper.NewsMapper.selectByPrimaryKey" column="news_id"/>
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->

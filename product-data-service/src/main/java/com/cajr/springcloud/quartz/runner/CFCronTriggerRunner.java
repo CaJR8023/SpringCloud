@@ -18,6 +18,7 @@ import java.util.List;
  */
 @Component
 public class CFCronTriggerRunner {
+
     @Autowired
     CFJob cfJob;
 

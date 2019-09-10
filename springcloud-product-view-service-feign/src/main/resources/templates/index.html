@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/header::html"></head>
+<body >
+<div id="workingArea">
+<div th:replace="include/top::html"></div>
+<article class="clearfix">
+    <div class="left_list fl">
+        <a href="#" target="_blank">
+            <div class="img_one">
+                <img src="static/upload/070232066648.jpg" alt="盈利恐非刘强东所愿，深挖京东Q4财报八大隐秘" class="lazy" />
+                <h1>{{news.title}}</h1>
+            </div>
+        </a>
+        <div class="img_two clearfix">
+            <a href="#" target="_blank" class="fl">
+                <div class="img_two_a">
+                    <img src="static/upload/070232066648.jpg" alt="盈利恐非刘强东所愿，深挖京东Q4财报八大隐秘" class="lazy" />
+                    <h2>{{news.title}}</h2>
+                </div>
+            </a>
+            <a href="#" target="_blank" class="fr">
+                <div class="img_two_a">
+                    <img src="static/upload/070232066648.jpg" alt="盈利恐非刘强东所愿，深挖京东Q4财报八大隐秘" class="lazy" />
+                    <h2>{{news.title}}</h2>
+                </div>
+            </a>
+        </div>
+        <div class="oli clearfix">
+            <a href="#" target="_blank" class="fl">
+                <div class="oli_img">
+                    <img src="static/upload/070232066648.jpg" alt="盈利恐非刘强东所愿，深挖京东Q4财报八大隐秘" class="lazy" />
+                </div>
+            </a>
+            <div class="oli_font fr">
+                <h3><a href="#">等了两个月，Supercell的《皇室战争》没有让大家失望</a></h3>
+                <div class="description">
+                    <p>一加中国区负责人刘皇甫透露了这次合作的一些信息：「合作是一个朋友介绍的，她和制片公司有合作，就牵了条线，我们觉得《纸牌屋》很适合我们的调性，对方也觉得OnePlus是一个他们很认可、欧美乃至全球都有许多粉丝的国际新锐品牌，于是合作就水到渠成...</p>
+                </div>
+                <div class="clearfix">
+                    <div class="data fl">
+                        <p class="author">编辑：admin</p>
+                        <p class="date"><i></i><span>2015-05-01</span></p>
+                    </div>
+                    <div class="fenx fl">
+                        <p class="sina"></p>
+                        <p class="weixin">
+                            <span><img src="static/upload/23434324.png" /></span>
+                            <i></i>
+                        </p>
+                        <p class="qzone"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="javascript:;" class="morearticle">
+            点击加载更多
+        </a>
+    </div>
+    <div class="right_list fr">
+        <div class="weekarticle">
+            <h3>一周热议</h3>
+            <div class="weekli">
+                <a href="#" target="_blank">
+                    <div class="weekimg">
+                        <img src="static/upload/070232066648.jpg" alt="盈利恐非刘强东所愿，深挖京东Q4财报八大隐秘" class="lazy" />
+                    </div>
+                </a>
+                <a href="#" target="_blank" class="weeklititle">
+                    {{news.title}}
+                </a>
+            </div>
+    </div>
+    </div>
+</article>
+<div th:replace="include/footer::html" ></div>
+</div>
+<script>
+    $(function () {
+        var dataVue = {
+            uri:'recommendations',
+            recommendations:[],
+            news:''
+        };
+
+        const vue = new Vue({
+            el:'#workingArea',
+            dataVue:dataVue,
+            mounted:function () {
+                this.load();
+            },
+            methods: {
+                load:function () {
+                    var url = this.uri
+                    axios.get(url).then(function (response) {
+                        var result = response.data;
+                        vue.recommendations = result;
+                        vue.news = result.news;
+                    });
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

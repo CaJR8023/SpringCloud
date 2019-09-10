@@ -101,18 +101,18 @@ public class NewsScraperUtil {
      * 初次使用，填充新闻模块信息：将默认RSS源所有模块填入。
      */
     private  int getModuleID(String moduleName) {
-        int mododuleID=-1;
+        int moduleId =-1;
         Newsmodules newsmodules = newsModulesService.selectByName(moduleName);
         if (newsmodules == null){
-            Newsmodules newsmodules1 = new Newsmodules();
+            Newsmodules newsModules1 = new Newsmodules();
             newsmodules.setName(moduleName);
             newsmodules = newsModulesService.selectByName(moduleName);
-            mododuleID = newsmodules.getId();
+            moduleId  = newsmodules.getId();
         }else {
-            mododuleID = newsmodules.getId();
+            moduleId  = newsmodules.getId();
         }
 
-        return mododuleID;
+        return moduleId ;
     }
 
 }

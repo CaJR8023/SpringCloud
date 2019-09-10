@@ -13,7 +13,10 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
@@ -27,7 +30,7 @@ import java.util.concurrent.TimeoutException;
 @EnableFeignClients
 @EnableCircuitBreaker//可以把信息共享给监控中心
 @SuppressWarnings("all")
-public class ProductViewServiceFeignApplication {
+public class ProductViewServiceFeignApplication extends WebMvcConfigurationSupport {
 
     public static void main(String[] args) {
 //        判断rabbitMQ是否启动
@@ -79,5 +82,12 @@ public class ProductViewServiceFeignApplication {
     @Bean
     public Sampler defaultSampler() {
         return Sampler.ALWAYS_SAMPLE;
+    }
+
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        super.addResourceHandlers(registry);
+        registry.addResourceHandler("/static/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/static/");
+        super.addResourceHandlers(registry);
     }
 }

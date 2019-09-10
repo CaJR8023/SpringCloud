@@ -12,4 +12,6 @@ public interface NewsLogsService {
     List<Newslogs> findAllByUserId(Long userId);
 
     List<Newslogs> findAll();
+
+    Integer add(Newslogs newslogs);
 }

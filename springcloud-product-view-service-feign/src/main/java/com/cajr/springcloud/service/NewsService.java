@@ -1,8 +1,7 @@
 package com.cajr.springcloud.service;
 
-import com.cajr.springcloud.client.ProductClientFeign;
+import com.cajr.springcloud.client.ClientFeign;
 import com.cajr.springcloud.vo.News;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,9 +11,9 @@ import java.util.List;
 public class NewsService {
 
     @Resource
-    ProductClientFeign productClientFeign;
+    ClientFeign productClientFeign;
 
     public List<News> listNews(){
-        return productClientFeign.listProducts();
+        return productClientFeign.listNews();
     }
 }
