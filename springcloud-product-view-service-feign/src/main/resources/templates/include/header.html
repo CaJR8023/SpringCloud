@@ -5,11 +5,12 @@
     <link href="static/css/article.css" rel="stylesheet" type="text/css" />
     <link href="static/css/list.css" rel="stylesheet" type="text/css" />
     <link href="static/css/about.css" rel="stylesheet" type="text/css" />
+    <link href="static/back/style.css" rel="stylesheet" type="text/css"/>
     <script src="static/js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script src="static/js/vue/2.5.16/vue.min.js"></script>
     <script src="static/js/axios/0.17.1/axios.min.js"></script>
     <script src="static/js/moment/2.22.2/moment.js"></script>
-    <script src="static/ js/lazyload.js"></script>
+    <script src="static/js/lazyload.js"></script>
     <script>
         function getUrlParms(para) {
             let search = location.search;//页面URL的查询部分字符串
@@ -47,7 +48,28 @@
             $(this).find("span,i").show();
         }, function () {
             $(this).find("span,i").hide();
-        })
+        });
+
+        Vue.filter("subStringFilter",function (value,start,end) {
+            if (!value)
+                return '';
+            return value.substring(start,end);
+        });
+        Vue.filter("formatMoneyFilter",function (value) {
+            return formatMoney(value);
+        });
+
+        Vue.filter("formatDateFilter",function (value,formatString) {
+            if (null==value)
+                return '';
+            formatString=formatString||'YYYY-MM-DD HH:mm:ss';
+            return moment(value).format(formatString);
+        });
+        Vue.prototype.subString = function (content,start,end) {
+            if (!content)
+                return  '';
+            return content.substring(start,end)+'........';
+        }
     </script>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 </template>

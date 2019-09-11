@@ -11,7 +11,12 @@ import java.util.List;
 public interface NewsService {
     List<News> findAll();
 
+    List<News> findSection();
+
+    List<News> findAllTimeDesc();
+
     News getOne(long id);
 
     int add(News news);
+
 }

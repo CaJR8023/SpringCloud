@@ -21,4 +21,13 @@ public class ForePageController {
     @GetMapping("/about")
     public String about(){return "about";}
 
+    @GetMapping("/example")
+    public String example(){return "product";}
+
+    @GetMapping("/login")
+    public String login(){return "login";}
+
+    @GetMapping("/login1")
+    public String login1(){return "login1";}
+
 }

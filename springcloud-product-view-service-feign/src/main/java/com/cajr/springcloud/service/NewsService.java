@@ -14,6 +14,11 @@ public class NewsService {
     ClientFeign productClientFeign;
 
     public List<News> listNews(){
+
         return productClientFeign.listNews();
+    }
+
+    public List<News> listHotNews(){
+        return productClientFeign.listHotNews();
     }
 }

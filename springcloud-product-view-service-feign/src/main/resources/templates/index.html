@@ -5,42 +5,29 @@
 <div id="workingArea">
 <div th:replace="include/top::html"></div>
 <article class="clearfix">
-    <div class="left_list fl">
+    <div class="left_list fl" >
         <a href="#" target="_blank">
             <div class="img_one">
-                <img src="static/upload/070232066648.jpg" alt="盈利恐非刘强东所愿，深挖京东Q4财报八大隐秘" class="lazy" />
-                <h1>{{news.title}}</h1>
+                <img :src="bestHotNews.url" class="lazy" />
+                <h1>{{bestHotNews.title}}</h1>
             </div>
         </a>
-        <div class="img_two clearfix">
-            <a href="#" target="_blank" class="fl">
-                <div class="img_two_a">
-                    <img src="static/upload/070232066648.jpg" alt="盈利恐非刘强东所愿，深挖京东Q4财报八大隐秘" class="lazy" />
-                    <h2>{{news.title}}</h2>
-                </div>
-            </a>
-            <a href="#" target="_blank" class="fr">
-                <div class="img_two_a">
-                    <img src="static/upload/070232066648.jpg" alt="盈利恐非刘强东所愿，深挖京东Q4财报八大隐秘" class="lazy" />
-                    <h2>{{news.title}}</h2>
-                </div>
-            </a>
-        </div>
-        <div class="oli clearfix">
+
+        <div class="oli clearfix" v-for="r in recommendations">
             <a href="#" target="_blank" class="fl">
                 <div class="oli_img">
-                    <img src="static/upload/070232066648.jpg" alt="盈利恐非刘强东所愿，深挖京东Q4财报八大隐秘" class="lazy" />
+                    <img :src="r.news.url"  class="lazy" />
                 </div>
             </a>
             <div class="oli_font fr">
-                <h3><a href="#">等了两个月，Supercell的《皇室战争》没有让大家失望</a></h3>
-                <div class="description">
-                    <p>一加中国区负责人刘皇甫透露了这次合作的一些信息：「合作是一个朋友介绍的，她和制片公司有合作，就牵了条线，我们觉得《纸牌屋》很适合我们的调性，对方也觉得OnePlus是一个他们很认可、欧美乃至全球都有许多粉丝的国际新锐品牌，于是合作就水到渠成...</p>
+                <h3><a :href="'article?newsId='+r.news.id" @click="addLogs(r.news.id)">{{r.news.title}}</a></h3>
+                <div class="description" v-html = "subString(r.news.content,0,100)">
+
                 </div>
                 <div class="clearfix">
                     <div class="data fl">
-                        <p class="author">编辑：admin</p>
-                        <p class="date"><i></i><span>2015-05-01</span></p>
+<!--                        <p class="author">编辑：admin</p>-->
+                        <p class="date"><i></i><span>{{r.news.newsTime|formatDateFilter('YYYY-MM-DD')}}</span></p>
                     </div>
                     <div class="fenx fl">
                         <p class="sina"></p>
@@ -53,21 +40,29 @@
                 </div>
             </div>
         </div>
-        <a href="javascript:;" class="morearticle">
-            点击加载更多
-        </a>
+
+        <div v-if="recommendations.news != null">
+            <a href="javascript:;" class="morearticle" >
+                点击加载更多
+            </a>
+        </div>
+        <div v-else>
+        <div class="morearticle" >
+            到底了
+        </div>
+    </div>
     </div>
     <div class="right_list fr">
         <div class="weekarticle">
             <h3>一周热议</h3>
-            <div class="weekli">
+            <div class="weekli" v-for="h in hotNews">
                 <a href="#" target="_blank">
                     <div class="weekimg">
-                        <img src="static/upload/070232066648.jpg" alt="盈利恐非刘强东所愿，深挖京东Q4财报八大隐秘" class="lazy" />
+                        <img :src="h.url" class="lazy" />
                     </div>
                 </a>
                 <a href="#" target="_blank" class="weeklititle">
-                    {{news.title}}
+                    {{h.title}}
                 </a>
             </div>
     </div>
@@ -77,26 +72,47 @@
 </div>
 <script>
     $(function () {
-        var dataVue = {
-            uri:'recommendations',
-            recommendations:[],
-            news:''
+        const dataVue = {
+            uri: 'recommendations',
+            recommendations: [],
+            hotNews:[],
+            hotUri:'hot',
+            bestHotUri:"hot_best",
+            bestHotNews:'',
+            logsUri:'logs'
         };
 
         const vue = new Vue({
             el:'#workingArea',
-            dataVue:dataVue,
+            data:dataVue,
             mounted:function () {
                 this.load();
+                this.hotLoad();
+                this.bestHotLoad();
             },
             methods: {
                 load:function () {
-                    var url = this.uri
+                    var url = this.uri;
                     axios.get(url).then(function (response) {
-                        var result = response.data;
-                        vue.recommendations = result;
-                        vue.news = result.news;
+                        vue.recommendations = response.data;
+                        vue.news = response.data.news;
                     });
+                },
+                hotLoad:function () {
+                    const url = this.hotUri;
+                    axios.get(url).then(function (response) {
+                        vue.hotNews = response.data;
+                    });
+                },
+                bestHotLoad:function () {
+                    const url = this.bestHotUri;
+                    axios.get(url).then(function (response) {
+                        vue.bestHotNews = response.data;
+                    });
+                },
+                addLogs:function (newsId) {
+                    const url = this.logsUri+"?newsId="+newsId;
+                    axios.post(url).then();
                 }
             }
         });

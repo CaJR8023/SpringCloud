@@ -30,4 +30,6 @@ public interface UsersMapper {
 
     List<Users> findSectionUsers(List<Long> userIds);
 
+    Users findOneByName(String name);
+
 }

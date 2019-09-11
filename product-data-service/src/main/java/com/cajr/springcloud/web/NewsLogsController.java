@@ -22,4 +22,9 @@ public class NewsLogsController {
     public Result add(@RequestBody Newslogs newslogs){
         return Result.success(this.newsLogsService.add(newslogs));
     }
+
+    @GetMapping("/hot")
+    public Result getHotNewsIds(){
+        return Result.success(this.newsLogsService.hotNewsIdList());
+    }
 }

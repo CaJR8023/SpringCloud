@@ -27,4 +27,6 @@ public interface NewsMapper {
     List<News> findSectionNews(List<Long> userIds);
 
     List<News> findSectionNewsById(List<Long> ids);
+
+    List<News> findAllTimeDesc();
 }

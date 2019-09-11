@@ -31,6 +31,11 @@
      #{item,jdbcType=BIGINT}
    </foreach>
   </select>
+  <select id="findAllTimeDesc" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from news order by news_time desc limit 20
+  </select>
   <select id="findAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>

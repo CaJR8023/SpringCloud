@@ -7,11 +7,13 @@ import com.cajr.springcloud.service.RecommendAlgorithm;
 import com.cajr.springcloud.util.NewsImportUtil;
 import com.cajr.springcloud.util.NewsScraperUtil;
 import com.cajr.springcloud.vo.News;
+import com.cajr.springcloud.vo.result.Result;
 import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLBooleanPrefJDBCDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -50,6 +52,16 @@ public class NewsController {
     public List<News> findAll(){
         List<News> news = newsService.findAll();
         return newsService.findAll();
+    }
+
+    @GetMapping("/one")
+    public News getOne(@RequestParam("newsId") Long newsId){
+        return this.newsService.getOne(newsId);
+    }
+
+    @GetMapping("/hot")
+    public List<News> listHotNews(){
+        return newsService.findSection();
     }
 
     @GetMapping("/import")

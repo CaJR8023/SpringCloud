@@ -10,7 +10,7 @@ spring:
     encoding: UTF-8
     servlet:
       content-type: text/html
-    mode: LEGACYHTML5
+    mode: HTML
 
   feign:
   hystrix:
@@ -25,4 +25,6 @@ management:
         allowed-origins: "*"
         allowed-methods: "*"
 
-
+ribbon:
+  ReadTimeout: 120000
+  ConnectTimeout: 30000

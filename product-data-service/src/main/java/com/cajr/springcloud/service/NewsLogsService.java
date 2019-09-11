@@ -13,5 +13,7 @@ public interface NewsLogsService {
 
     List<Newslogs> findAll();
 
+    List<Long> hotNewsIdList();
+
     Integer add(Newslogs newslogs);
 }

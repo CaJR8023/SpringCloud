@@ -1,8 +1,10 @@
 package com.cajr.springcloud.service.impl;
 
 import com.cajr.springcloud.service.NewsLogsService;
+import com.cajr.springcloud.service.NewsService;
 import com.cajr.springcloud.service.RecommendAlgorithm;
 import com.cajr.springcloud.service.RecommendationsService;
+import com.cajr.springcloud.vo.News;
 import com.cajr.springcloud.vo.Newslogs;
 import com.cajr.springcloud.vo.Recommendations;
 import org.apache.log4j.Logger;
@@ -37,6 +39,9 @@ public  class HotRecommender implements RecommendAlgorithm {
 
     @Resource
     NewsLogsService newsLogsService;
+
+    @Resource
+    NewsService newsService;
 
     @Resource
     RecommendService recommendService;
@@ -96,19 +101,20 @@ public  class HotRecommender implements RecommendAlgorithm {
 
     public  void formTodayTopHotNewsList() {
         topHotNewsList.clear();
-        ArrayList<Long> hotNewsTobeReccommended = new ArrayList<>();
+        ArrayList<Long> hotNewsTobeRecommended = new ArrayList<>();
 
         List<Newslogs> newsLogsList = newsLogsService.findAll();
         if (!newsLogsList.isEmpty()){
             for (Newslogs newslogs : newsLogsList){
-                if (newslogs.getViewTime().before(recommendService.getInRecDate1())){
-                    hotNewsTobeReccommended.add(newslogs.getNewsId());
+                if (newslogs.getViewTime().before(recommendService.getSpecificDateFormat(-1))){
+                    hotNewsTobeRecommended.add(newslogs.getNewsId());
                 }
             }
-            for (Long news : hotNewsTobeReccommended)
-            {
-                topHotNewsList.add(news);
+            List<News> newsList = newsService.findAllTimeDesc();
+            for (News n : newsList) {
+                hotNewsTobeRecommended.add(n.getId());
             }
+            topHotNewsList.addAll(hotNewsTobeRecommended);
         }
 
 
